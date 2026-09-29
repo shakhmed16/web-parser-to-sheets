@@ -1,0 +1,34 @@
+# Шаблон под типовой интернет-магазин. Замените селекторы под свой сайт:
+# откройте страницу каталога → F12 → найдите карточку товара и её поля.
+name: shop
+start_url: https://example.com/catalog?page=1
+delay_sec: 1.0
+max_pages: 0
+
+item: div.product-card
+fields:
+  name:
+    selector: .product-title
+  price:
+    selector: .price
+    regex: "[\\d\\s]+"
+  old_price:
+    selector: .old-price
+    regex: "[\\d\\s]+"
+  sku:
+    selector: .sku
+  url:
+    selector: a.product-link
+    attr: href
+    absolute: true
+  image:
+    selector: img
+    attr: src
+    absolute: true
+
+next_page: a.pagination__next
+
+output:
+  excel: output/shop.xlsx
+  csv: output/shop.csv
+  google_sheet_tab: shop

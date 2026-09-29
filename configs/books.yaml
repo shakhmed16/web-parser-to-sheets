@@ -1,0 +1,35 @@
+# Демо: каталог книг books.toscrape.com (учебный сайт для парсинга)
+name: books
+start_url: https://books.toscrape.com/catalogue/page-1.html
+delay_sec: 0.5           # пауза между страницами, чтобы не нагружать сайт
+max_pages: 5             # 0 = все страницы
+
+# Как найти карточки товаров на странице и что из них взять
+item: article.product_pod
+fields:
+  title:
+    selector: h3 a
+    attr: title
+  price:
+    selector: p.price_color
+    regex: "[\\d.]+"       # оставить только число
+  in_stock:
+    selector: p.instock.availability
+    clean: true
+  rating:
+    selector: p.star-rating
+    attr: class
+    regex: "(One|Two|Three|Four|Five)"
+  url:
+    selector: h3 a
+    attr: href
+    absolute: true
+
+# Следующая страница
+next_page: li.next a
+
+# Куда сохранять
+output:
+  excel: output/books.xlsx
+  csv: output/books.csv
+  google_sheet_tab: books    # лист в Google-таблице (если настроен .env)
